@@ -1,1 +1,388 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bác Hồ và Đức Tính Tiết Kiệm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif', serif;
+        }
+        .hero-pattern {
+            background-color: #f5f3eb;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(139, 109, 61, 0.03) 35px, rgba(139, 109, 61, 0.03) 70px);
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #8b6d3d;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .section-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .quote-mark {
+            font-family: Georgia, serif;
+            font-size: 4rem;
+            line-height: 0;
+            color: #8b6d3d;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="bg-stone-50">
+    <!-- Navigation -->
+    <nav class="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="#home" class="text-xl font-bold text-amber-900">🍃 Bác Hồ</a>
+                <button id="menuBtn" class="md:hidden text-amber-900">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <div id="menuItems" class="hidden md:flex space-x-6">
+                    <a href="#home" class="nav-link text-stone-700 hover:text-amber-900">Trang chủ</a>
+                    <a href="#tieusу" class="nav-link text-stone-700 hover:text-amber-900">Tiểu sử</a>
+                    <a href="#cautruyen" class="nav-link text-stone-700 hover:text-amber-900">Câu chuyện</a>
+                    <a href="#renlуyen" class="nav-link text-stone-700 hover:text-amber-900">Rèn luyện</a>
+                    <a href="#qrcode" class="nav-link text-stone-700 hover:text-amber-900">Liên kết</a>
+                </div>
+            </div>
+            <div id="mobileMenu" class="hidden md:hidden pb-4">
+                <a href="#home" class="block py-2 text-stone-700 hover:text-amber-900">Trang chủ</a>
+                <a href="#tieusу" class="block py-2 text-stone-700 hover:text-amber-900">Tiểu sử</a>
+                <a href="#cautruyen" class="block py-2 text-stone-700 hover:text-amber-900">Câu chuyện</a>
+                <a href="#renlуyen" class="block py-2 text-stone-700 hover:text-amber-900">Rèn luyện</a>
+                <a href="#qrcode" class="block py-2 text-stone-700 hover:text-amber-900">Liên kết</a>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Hero Section -->
+    <section id="home" class="hero-pattern py-16 md:py-24">
+        <div class="max-w-5xl mx-auto px-4 text-center fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold text-amber-900 mb-6">Bác Hồ và Đức Tính Tiết Kiệm</h1>
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg p-6 md:p-10 shadow-lg max-w-3xl mx-auto border-l-4 border-amber-700">
+                <p class="quote-mark">"</p>
+                <p class="text-xl md:text-2xl text-stone-700 italic leading-relaxed">
+                    Cần kiệm để xây dựng đất nước ta giàu đẹp, để cuộc sống của nhân dân ta ấm no, hạnh phúc
+                </p>
+                <p class="quote-mark text-right">"</p>
+                <p class="text-right text-amber-800 font-semibold mt-4">— Chủ tịch Hồ Chí Minh</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tiểu sử Section -->
+    <section id="tieusу" class="py-16 md:py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-amber-900 mb-12 section-reveal">Tiểu Sử Chủ Tịch Hồ Chí Minh</h2>
+            
+            <div class="bg-stone-50 rounded-lg p-6 md:p-10 shadow-md section-reveal border border-stone-200">
+                <!-- Chỗ này để trống cho bạn fill nội dung tiểu sử -->
+                <div class="prose prose-lg max-w-none text-stone-700">
+                    <p class="text-center text-stone-500 italic py-8">
+                        [Nội dung tiểu sử về Bác Hồ - Bạn sẽ fill sau]<br>
+                        Hướng dẫn: Thay thế đoạn text này bằng nội dung tiểu sử chi tiết
+                    </p>
+                </div>
+            </div>
+
+            <!-- Ảnh decor -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <div class="section-reveal">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover-lift border border-stone-200">
+                        <div class="aspect-video bg-stone-200 flex items-center justify-center">
+                            <p class="text-stone-500 text-center px-4">[Ảnh Bác Hồ 1]<br>Thêm ảnh vào src</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-reveal">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover-lift border border-stone-200">
+                        <div class="aspect-video bg-stone-200 flex items-center justify-center">
+                            <p class="text-stone-500 text-center px-4">[Ảnh Bác Hồ 2]<br>Thêm ảnh vào src</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-reveal">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover-lift border border-stone-200">
+                        <div class="aspect-video bg-stone-200 flex items-center justify-center">
+                            <p class="text-stone-500 text-center px-4">[Ảnh Bác Hồ 3]<br>Thêm ảnh vào src</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3 Câu chuyện -->
+    <section id="cautruyen" class="py-16 md:py-20 hero-pattern">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-amber-900 mb-12 section-reveal">Ba Câu Chuyện Tiêu Biểu</h2>
+            
+            <!-- Câu chuyện 1 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-8 section-reveal hover-lift border border-stone-200">
+                <h3 class="text-2xl font-bold text-amber-800 mb-4">📖 Câu chuyện 1: [Tiêu đề]</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="bg-stone-100 rounded-lg overflow-hidden mb-4 border border-stone-200">
+                            <div class="aspect-video bg-stone-200 flex items-center justify-center">
+                                <p class="text-stone-500 text-center px-4">[Ảnh minh họa câu chuyện 1]</p>
+                            </div>
+                        </div>
+                        <div class="bg-stone-800 rounded-lg overflow-hidden aspect-video">
+                            <div class="w-full h-full flex items-center justify-center text-white">
+                                <p class="text-center px-4">[Video câu chuyện 1]<br>Nhúng video tại đây</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-stone-700 leading-relaxed">
+                        <p class="text-stone-500 italic">
+                            [Nội dung câu chuyện 1 - Bạn sẽ fill sau]<br><br>
+                            Hướng dẫn: Thay thế đoạn này bằng nội dung câu chuyện chi tiết
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Câu chuyện 2 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-8 section-reveal hover-lift border border-stone-200">
+                <h3 class="text-2xl font-bold text-amber-800 mb-4">📖 Câu chuyện 2: [Tiêu đề]</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="bg-stone-100 rounded-lg overflow-hidden mb-4 border border-stone-200">
+                            <div class="aspect-video bg-stone-200 flex items-center justify-center">
+                                <p class="text-stone-500 text-center px-4">[Ảnh minh họa câu chuyện 2]</p>
+                            </div>
+                        </div>
+                        <div class="bg-stone-800 rounded-lg overflow-hidden aspect-video">
+                            <div class="w-full h-full flex items-center justify-center text-white">
+                                <p class="text-center px-4">[Video câu chuyện 2]<br>Nhúng video tại đây</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-stone-700 leading-relaxed">
+                        <p class="text-stone-500 italic">
+                            [Nội dung câu chuyện 2 - Bạn sẽ fill sau]<br><br>
+                            Hướng dẫn: Thay thế đoạn này bằng nội dung câu chuyện chi tiết
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Câu chuyện 3 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-8 section-reveal hover-lift border border-stone-200">
+                <h3 class="text-2xl font-bold text-amber-800 mb-4">📖 Câu chuyện 3: [Tiêu đề]</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="bg-stone-100 rounded-lg overflow-hidden mb-4 border border-stone-200">
+                            <div class="aspect-video bg-stone-200 flex items-center justify-center">
+                                <p class="text-stone-500 text-center px-4">[Ảnh minh họa câu chuyện 3]</p>
+                            </div>
+                        </div>
+                        <div class="bg-stone-800 rounded-lg overflow-hidden aspect-video">
+                            <div class="w-full h-full flex items-center justify-center text-white">
+                                <p class="text-center px-4">[Video câu chuyện 3]<br>Nhúng video tại đây</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-stone-700 leading-relaxed">
+                        <p class="text-stone-500 italic">
+                            [Nội dung câu chuyện 3 - Bạn sẽ fill sau]<br><br>
+                            Hướng dẫn: Thay thế đoạn này bằng nội dung câu chuyện chi tiết
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rèn luyện Section -->
+    <section id="renlуyen" class="py-16 md:py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-amber-900 mb-4 section-reveal">Rèn Luyện Lối Sống Tiết Kiệm</h2>
+            <p class="text-center text-xl text-amber-700 mb-12 section-reveal">🎮 Vừa học - Vừa chơi</p>
+            
+            <!-- Trò chơi 1 - Wordwall -->
+            <div class="bg-stone-50 rounded-lg shadow-md p-6 mb-8 section-reveal border border-stone-200">
+                <h3 class="text-2xl font-bold text-amber-800 mb-4">🎯 Trò chơi 1: Tìm đáp án đúng</h3>
+                <p class="text-stone-600 mb-4">Hướng dẫn: Chọn đáp án đúng cho mỗi câu hỏi về lối sống tiết kiệm</p>
+                <div class="bg-white rounded-lg overflow-hidden shadow-inner border-2 border-amber-200">
+                    <iframe style="max-width:100%; border-radius: 8px;" src="https://wordwall.net/vi/embed/2f826ebca63948b3b6ddf75a9ae1f54a?themeId=65&templateId=30&fontStackId=15" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Trò chơi 2 - Game vượt chướng ngại vật -->
+            <div class="bg-stone-50 rounded-lg shadow-md p-6 mb-12 section-reveal border border-stone-200">
+                <h3 class="text-2xl font-bold text-amber-800 mb-4">🏃 Trò chơi 2: Vượt chướng ngại vật</h3>
+                <p class="text-stone-600 mb-4">Hướng dẫn: Trả lời đúng câu hỏi để nhân vật vượt qua chướng ngại vật</p>
+                <div class="bg-white rounded-lg overflow-hidden shadow-inner border-2 border-amber-200">
+                    <iframe src="game2.html" width="100%" height="600" frameborder="0" class="rounded-lg"></iframe>
+                </div>
+                <p class="text-sm text-stone-500 mt-2 italic">* Lưu ý: File game2.html cần được đặt cùng thư mục với file website này</p>
+            </div>
+
+            <!-- Phương án tiết kiệm -->
+            <div class="bg-gradient-to-br from-green-50 to-blue-50 rounded-lg shadow-lg p-6 md:p-10 section-reveal border-2 border-green-200">
+                <h3 class="text-2xl md:text-3xl font-bold text-green-800 mb-6 text-center">💡 Phương Án Sống Tiết Kiệm</h3>
+                
+                <!-- 3 phương án -->
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white rounded-lg p-6 shadow-md hover-lift border border-green-200">
+                        <div class="text-4xl mb-3 text-center">📊</div>
+                        <h4 class="font-bold text-lg text-green-800 mb-2">Lập kế hoạch chi tiêu cá nhân</h4>
+                        <p class="text-stone-600 text-sm">Ghi chép thu – chi hằng ngày, chia tiền theo quy tắc 6 chiếc lọ</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-md hover-lift border border-green-200">
+                        <div class="text-4xl mb-3 text-center">🎯</div>
+                        <h4 class="font-bold text-lg text-green-800 mb-2">Hạn chế chạy theo hàng hiệu</h4>
+                        <p class="text-stone-600 text-sm">So sánh giá trị sử dụng, không mua theo trào lưu xa xỉ</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-md hover-lift border border-green-200">
+                        <div class="text-4xl mb-3 text-center">♻️</div>
+                        <h4 class="font-bold text-lg text-green-800 mb-2">Tái sử dụng đồ dùng</h4>
+                        <p class="text-stone-600 text-sm">Sửa chữa, tận dụng lại đồ cũ thay vì vứt bỏ</p>
+                    </div>
+                </div>
+
+                <!-- Chi tiết phương án -->
+                <div class="bg-white rounded-lg p-6 md:p-8 mb-6 border border-green-200">
+                    <h4 class="font-bold text-xl text-green-800 mb-4">📋 Phương án chi tiết:</h4>
+                    <ul class="space-y-2 text-stone-700">
+                        <li>✓ Lập kế hoạch chi tiêu cá nhân</li>
+                        <li>✓ Hạn chế chạy theo hàng hiệu, trào lưu tiêu dùng xa xỉ</li>
+                        <li>✓ Tái sử dụng đồ dùng còn giá trị thay vì vứt bỏ</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 md:p-8 mb-6 border border-green-200">
+                    <h4 class="font-bold text-xl text-green-800 mb-4">🤔 Vì sao cần thiết:</h4>
+                    <p class="text-stone-700 leading-relaxed">
+                        Trong xã hội hiện đại, giới trẻ dễ bị ảnh hưởng bởi mạng xã hội và lối sống phô trương. Tiết kiệm giúp các bạn làm chủ tài chính, sống thực tế, biết quý trọng đồng tiền do lao động mà có.
+                    </p>
+                </div>
+
+                <!-- Chi tiết cách làm -->
+                <div class="space-y-6">
+                    <!-- 1. Lập kế hoạch -->
+                    <div class="bg-white rounded-lg p-6 md:p-8 border border-blue-200">
+                        <h4 class="font-bold text-xl text-blue-800 mb-4">1️⃣ Lập kế hoạch chi tiêu cá nhân</h4>
+                        <ul class="space-y-3 text-stone-700 mb-4">
+                            <li>• Ghi chép thu – chi hằng ngày (bằng sổ tay hoặc ứng dụng điện thoại)</li>
+                            <li>• Chia tiền theo nhóm rõ ràng: <strong>quy tắc 6 chiếc lọ</strong></li>
+                        </ul>
+                        <div class="bg-blue-50 rounded-lg p-4 mb-4 border border-blue-100">
+                            <p class="font-semibold text-blue-900 mb-3">Quy tắc 6 chiếc lọ:</p>
+                            <div class="grid md:grid-cols-2 gap-3 text-sm">
+                                <div>🏠 Chi tiêu thiết yếu – 55%</div>
+                                <div>💰 Tiết kiệm dài hạn – 10%</div>
+                                <div>📚 Giáo dục – 10%</div>
+                                <div>🎉 Hưởng thụ – 10%</div>
+                                <div>📈 Đầu tư – 10%</div>
+                                <div>❤️ Cho đi/Thiện nguyện – 5%</div>
+                            </div>
+                        </div>
+                        <p class="text-stone-600 italic">→ Cách làm này giúp giới trẻ kiểm soát tài chính, tránh tiêu tiền theo cảm xúc nhất thời</p>
+                    </div>
+
+                    <!-- 2. Hạn chế hàng hiệu -->
+                    <div class="bg-white rounded-lg p-6 md:p-8 border border-purple-200">
+                        <h4 class="font-bold text-xl text-purple-800 mb-4">2️⃣ Hạn chế chạy theo hàng hiệu, trào lưu tiêu dùng xa xỉ</h4>
+                        <ul class="space-y-3 text-stone-700 mb-4">
+                            <li>• So sánh giá trị sử dụng thay vì chú trọng nhãn hiệu hay mẫu mã</li>
+                            <li>• Tự hỏi trước khi mua:
+                                <ul class="ml-6 mt-2 space-y-1">
+                                    <li>- Mình có thực sự cần không?</li>
+                                    <li>- Món đồ này dùng được bao lâu?</li>
+                                </ul>
+                            </li>
+                            <li>• Không mua sắm theo trào lưu trên mạng xã hội</li>
+                            <li>• Ưu tiên sản phẩm bền, phù hợp khả năng tài chính</li>
+                        </ul>
+                        <p class="text-stone-600 italic">→ Điều này giúp giới trẻ sống thực tế, không bị áp lực bởi hình thức và dư luận</p>
+                    </div>
+
+                    <!-- 3. Tái sử dụng -->
+                    <div class="bg-white rounded-lg p-6 md:p-8 border border-green-200">
+                        <h4 class="font-bold text-xl text-green-800 mb-4">3️⃣ Tái sử dụng đồ dùng còn giá trị</h4>
+                        <ul class="space-y-3 text-stone-700 mb-4">
+                            <li>• Sửa chữa, tận dụng lại đồ cũ (quần áo, sách vở, đồ học tập) khi vẫn dùng tốt</li>
+                            <li>• Chia sẻ hoặc tặng lại đồ không dùng cho người khác</li>
+                            <li>• Tận dụng giấy, sách, đồ dùng học tập cho năm học sau</li>
+                            <li>• Thực hiện phân loại rác, tái chế để giảm lãng phí</li>
+                        </ul>
+                        <p class="text-stone-600 italic">→ Việc này vừa tiết kiệm tiền, vừa thể hiện ý thức bảo vệ môi trường</p>
+                    </div>
+                </div>
+
+                <!-- Box ý kiến -->
+                <div class="bg-amber-50 rounded-lg p-6 md:p-8 mt-8 border-2 border-amber-300">
+                    <h4 class="font-bold text-xl text-amber-900 mb-4 text-center">💬 Bạn sẽ làm gì để sống tiết kiệm?</h4>
+                    <textarea id="userIdea" class="w-full p-4 border-2 border-amber-200 rounded-lg focus:border-amber-500 focus:outline-none min-h-32 bg-white" placeholder="Chia sẻ ý tưởng của bạn về cách sống tiết kiệm..."></textarea>
+                    <button onclick="saveIdea()" class="mt-4 bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-lg transition-colors w-full md:w-auto">
+                        Gửi ý kiến
+                    </button>
+                    <p class="text-sm text-stone-600 mt-2 italic">* Ý kiến của bạn sẽ được lưu lại để tham khảo</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QR Code Section -->
+    <section id="qrcode" class="py-16 md:py-20 hero-pattern">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-amber-900 mb-8 section-reveal">📱 Liên Kết & Chia Sẻ</h2>
+            
+            <div class="bg-white rounded-lg shadow-lg p-8 md:p-12 section-reveal border-2 border-amber-200">
+                <p class="text-lg text-stone-700 mb-6">Quét mã QR để truy cập website</p>
+                
+                <!-- QR Code Container -->
+                <div id="qrcode" class="flex justify-center mb-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md border-4 border-amber-100">
+                        <canvas id="qrCanvas" width="250" height="250"></canvas>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="downloadQR()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition-colors flex items-center justify-center gap-2">
+                        <span>📥</span> Tải QR Code
+                    </button>
+                    <button onclick="shareWeb
