@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chia Sẻ Website - QR Code</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="bg-decoration"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="ANHBACHOVAVIDEO/Ảnh chân dung bác.JPG" alt="Bác Hồ" class="logo-img">
+                    <div>
+                        <h1>Bác Hồ</h1>
+                        <p>Và Đức Tính Tiết Kiệm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Chia Sẻ Website</h1>
+            <p>Quét mã QR để truy cập nhanh</p>
+            <a href="index.html" class="back-btn">← Về Trang Chủ</a>
+        </div>
+    </div>
+
+    <!-- QR Section -->
+    <section class="qr-section">
+        <div class="container">
+            <div class="qr-box fade-in">
+                <h2>📱 Mã QR Website</h2>
+                <p>Quét mã để truy cập website và chia sẻ với bạn bè</p>
+                
+                <div class="qr-image">
+                    <img src="ANHBACHOVAVIDEO/MãQR.png" alt="QR Code Website">
+                </div>
+                
+                <div class="qr-buttons">
+                    <button id="download-qr" class="qr-btn">
+                        📥 Tải Mã QR
+                    </button>
+                    <button id="share-btn" class="qr-btn">
+                        📤 Chia Sẻ
+                    </button>
+                </div>
+                
+                <div style="margin-top:30px; padding:25px; background:linear-gradient(135deg, rgba(45,80,22,0.05), rgba(212,175,55,0.05)); border-radius:15px; text-align:left">
+                    <h3 style="color:var(--color-primary); margin-bottom:15px; font-size:20px">📖 Hướng Dẫn Sử Dụng:</h3>
+                    <ul style="line-height:1.8; padding-left:20px">
+                        <li>Sử dụng camera điện thoại để quét mã QR</li>
+                        <li>Hoặc nhấn "Tải Mã QR" để lưu về máy</li>
+                        <li>Chia sẻ với bạn bè qua mạng xã hội</li>
+                        <li>Cùng nhau học tập tư tưởng Hồ Chí Minh</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Additional Info -->
+            <div style="max-width:800px; margin:60px auto 0; text-align:center">
+                <h3 style="color:var(--color-primary); font-size:28px; margin-bottom:20px">🌟 Lan Tỏa Giá Trị Tốt Đẹp</h3>
+                <p style="font-size:16px; line-height:1.8; color:var(--color-text); margin-bottom:30px">
+                    Hãy chia sẻ website này với bạn bè, gia đình để cùng nhau học tập và noi gương đạo đức, phong cách sống giản dị, tiết kiệm của Bác Hồ kính yêu. Mỗi lượt chia sẻ là một hành động nhỏ góp phần lan tỏa những giá trị tốt đẹp!
+                </p>
+                
+                <!-- Social Share Buttons -->
+                <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap; margin-top:30px">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="window.open(this.href + encodeURIComponent(window.location.href), 'facebook-share', 'width=580,height=296'); return false;" 
+                       style="padding:12px 25px; background:#1877f2; color:white; border-radius:25px; display:inline-flex; align-items:center; gap:8px; font-weight:700; transition:all 0.3s ease; text-decoration:none">
+                        📘 Chia sẻ Facebook
+                    </a>
+                    
+                    <a href="https://twitter.com/intent/tweet?url=" onclick="window.open(this.href + encodeURIComponent(window.location.href) + '&text=Học tập tư tưởng Hồ Chí Minh về tiết kiệm', 'twitter-share', 'width=580,height=296'); return false;"
+                       style="padding:12px 25px; background:#1da1f2; color:white; border-radius:25px; display:inline-flex; align-items:center; gap:8px; font-weight:700; transition:all 0.3s ease; text-decoration:none">
+                        🐦 Chia sẻ Twitter
+                    </a>
+                    
+                    <button onclick="copyLink()" id="copy-link-btn"
+                       style="padding:12px 25px; background:var(--color-primary); color:white; border:none; border-radius:25px; display:inline-flex; align-items:center; gap:8px; font-weight:700; transition:all 0.3s ease; cursor:pointer">
+                        🔗 Sao chép link
+                    </button>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div style="max-width:800px; margin:60px auto; padding:40px; background:white; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.1)">
+                <h3 style="color:var(--color-primary); font-size:24px; margin-bottom:30px; text-align:center">📊 Thống Kê Website</h3>
+                
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:25px">
+                    <div style="text-align:center; padding:25px; background:linear-gradient(135deg, rgba(45,80,22,0.05), rgba(212,175,55,0.05)); border-radius:15px">
+                        <div style="font-size:48px; margin-bottom:10px">📄</div>
+                        <h4 style="color:var(--color-primary); font-size:18px; margin-bottom:8px">Số Trang</h4>
+                        <p style="font-size:32px; font-weight:bold; color:var(--color-accent)">5</p>
+                    </div>
+                    
+                    <div style="text-align:center; padding:25px; background:linear-gradient(135deg, rgba(45,80,22,0.05), rgba(212,175,55,0.05)); border-radius:15px">
+                        <div style="font-size:48px; margin-bottom:10px">📖</div>
+                        <h4 style="color:var(--color-primary); font-size:18px; margin-bottom:8px">Câu Chuyện</h4>
+                        <p style="font-size:32px; font-weight:bold; color:var(--color-accent)">3</p>
+                    </div>
+                    
+                    <div style="text-align:center; padding:25px; background:linear-gradient(135deg, rgba(45,80,22,0.05), rgba(212,175,55,0.05)); border-radius:15px">
+                        <div style="font-size:48px; margin-bottom:10px">🎮</div>
+                        <h4 style="color:var(--color-primary); font-size:18px; margin-bottom:8px">Trò Chơi</h4>
+                        <p style="font-size:32px; font-weight:bold; color:var(--color-accent)">2</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Website Học Tập Tư Tưởng Hồ Chí Minh</p>
+            <p>Được thực hiện với lòng kính trọng và học hỏi</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function copyLink() {
+            const url = window.location.href.replace('lien-ket.html', 'index.html');
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.getElementById('copy-link-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✓ Đã sao chép!';
+                btn.style.background = '#22c55e';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'var(--color-primary)';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

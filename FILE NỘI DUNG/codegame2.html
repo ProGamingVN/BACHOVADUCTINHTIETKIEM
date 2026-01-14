@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vượt Chướng Ngại Vật - Học Tập Tiết Kiệm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes gradient-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient-move 8s ease infinite;
+        }
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            user-select: none;
+            background-color: #0c4a6e;
+            touch-action: manipulation;
+        }
+        .font-bungee { font-family: 'Bungee', cursive; }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
+
+        .ball-shadow {
+            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.3), 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Chống highlight khi nhấn trên mobile */
+        * { -webkit-tap-highlight-color: transparent; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+
+        // --- DỮ LIỆU CÂU HỎI ---
+        const QUESTIONS = [
+            { id: 1, text: "Theo tư tưởng Hồ Chí Minh, việc lập kế hoạch chi tiêu cá nhân giúp giới trẻ:", options: ["A. Chi tiêu thoải mái theo cảm xúc", "B. Làm chủ tài chính, sống thực tế", "C. Sống hưởng thụ", "D. Chỉ quan tâm nhãn hiệu và trào lưu"], answer: "B" },
+            { id: 2, text: "Hạn chế chạy theo hàng hiệu, trào lưu tiêu dùng xa xỉ là biểu hiện của:", options: ["A. Sống kham khổ", "B. Tiết kiệm tiền bạc, sống thực tế", "C. Sống hưởng thụ, chạy theo mạng xã hội", "D. Không quan tâm học tập"], answer: "B" },
+            { id: 3, text: "Tái sử dụng đồ dùng còn giá trị giúp:", options: ["A. Chỉ tiết kiệm tiền", "B. Giảm lãng phí, bảo vệ môi trường", "C. Lãng phí thời gian", "D. Tạo áp lực dư luận"], answer: "B" },
+            { id: 4, text: "Khi Bác Hồ dùng bát cháo nấu từ cơm nguội, Người muốn nhắn nhủ điều gì về lối sống?", options: ["A. Tiết kiệm, không lãng phí thực phẩm", "B. Hưởng thụ cá nhân", "C. Chỉ quan tâm đến sức khỏe", "D. Phô trương sự giản dị"], answer: "A" },
+            { id: 5, text: "Nếu học sinh muốn thực hành nguyên tắc “ưu tiên nhu cầu trước mong muốn” trong chi tiêu, nên làm gì?", options: ["A. Mua tất cả những món đồ thích ngay lập tức", "B. Chỉ mua những thứ thực sự cần thiết, chia tiền hợp lý", "C. Chạy theo trào lưu mạng xã hội", "D. Dùng tiền cho giải trí hết"], answer: "B" },
+            { id: 6, text: "Bác Hồ gửi tiền tiết kiệm của mình cho Bộ Quốc phòng để làm quà tặng cho bộ đội phòng không cho thấy:", options: ["A. Bác chỉ quan tâm đến bản thân", "B. Tiết kiệm chỉ để dùng riêng", "C. Tiết kiệm để dùng vì lợi ích chung và giúp đỡ người khác", "D. Tiết kiệm để mua hàng hiệu"], answer: "C" },
+            { id: 7, text: "Việc Bác Hồ đọc bản tin rônêô mờ nhòe nhưng vẫn dùng để viết hoặc cắt thành phong bì tiết kiệm giấy thể hiện:", options: ["A. Không quan tâm chất lượng thông tin", "B. Lãng phí tài nguyên", "C. Sống tiết kiệm, quý trọng giấy mực và tiền bạc", "D. Chỉ quan tâm công việc cá nhân"], answer: "C" },
+            { id: 8, text: "Câu chuyện bà Nguyễn Thị Liên vá áo gối, quần áo cho Bác Hồ cho thấy bài học gì về lối sống của Người?", options: ["A. Phô trương vật chất", "B. Giản dị, tiết kiệm, trân trọng tài sản", "C. Chỉ quan tâm đến bản thân", "D. Tiêu dùng xa xỉ"], answer: "B" },
+            { id: 9, text: "Nguyên tắc 6 chiếc lọ trong chi tiêu cá nhân giúp giới trẻ:", options: ["A. Chi tiêu theo cảm xúc, không kiểm soát", "B. Biết phân chia tiền hợp lý, ưu tiên nhu cầu, tích lũy cho tương lai và giúp người khác", "C. Mua sắm trào lưu mạng xã hội", "D. Chỉ dùng tiền cho giải trí"], answer: "B" },
+            { id: 10, text: "Qua các câu chuyện về Bác Hồ, có thể rút ra bài học nào cho giới trẻ hiện nay?", options: ["A. Tiết kiệm chỉ là tiết kiệm tiền bạc", "B. Sống tiết kiệm là sống có trách nhiệm, biết quý trọng tài nguyên và giúp đỡ người khác", "C. Sống kham khổ, thiếu thốn", "D. Chỉ quan tâm hưởng thụ cá nhân"], answer: "B" }
+        ];
+
+        const OBSTACLE_TYPES = ['🪨', '🚗', '🚙', '📦', '🌵'];
+        const GROUND_DECOR = ['🌷', '🍃', '☘️'];
+
+        // --- COMPONENTS ---
+        
+        // Modal Câu Hỏi với hiệu ứng Xanh/Đỏ
+        const QuestionModal = ({ question, onAnswer, playSound }) => {
+            const [selected, setSelected] = useState(null);
+            const [isConfirmed, setIsConfirmed] = useState(false);
+
+            const handleSelect = (option) => {
+                if (isConfirmed) return;
+                const code = option.charAt(0);
+                const isCorrect = code === question.answer;
+                
+                setSelected(code);
+                setIsConfirmed(true);
+                
+                if (isCorrect) playSound('correct');
+                else playSound('wrong');
+
+                // Chờ 1.5 giây để xem kết quả trước khi nhảy
+                setTimeout(() => {
+                    onAnswer(isCorrect);
+                }, 1500);
+            };
+
+            return (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 overflow-y-auto">
+                    <div className="bg-white rounded-[30px] md:rounded-[40px] w-full max-w-2xl overflow-hidden shadow-2xl border-4 border-white/50 my-auto">
+                        <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-6 md:p-10 text-white text-center">
+                            <p className="text-xs uppercase font-black opacity-70 mb-2 tracking-widest">Câu {question.id}/10</p>
+                            <h2 className="text-xl md:text-3xl font-bold leading-tight">{question.text}</h2>
+                        </div>
+                        <div className="p-6 md:p-10 space-y-3 bg-gray-50">
+                            {question.options.map((opt, i) => {
+                                const code = opt.charAt(0);
+                                const isCorrectCode = code === question.answer;
+                                const isSelectedCode = code === selected;
+
+                                let btnStyle = "border-gray-200 bg-white text-gray-700 hover:bg-blue-50";
+                                let icon = null;
+
+                                if (isConfirmed) {
+                                    if (isCorrectCode) {
+                                        btnStyle = "bg-green-500 border-green-600 text-white shadow-[0_0_20px_rgba(34,197,94,0.5)]";
+                                        icon = <span className="text-2xl animate-bounce">✔️</span>;
+                                    } else if (isSelectedCode) {
+                                        btnStyle = "bg-red-500 border-red-600 text-white animate-shake shadow-[0_0_20px_rgba(239,68,68,0.5)]";
+                                        icon = <span className="text-2xl">❌</span>;
+                                    } else {
+                                        btnStyle = "border-gray-100 bg-gray-50 text-gray-400 opacity-50";
+                                    }
+                                }
+
+                                return (
+                                    <button 
+                                        key={i} 
+                                        disabled={isConfirmed}
+                                        onClick={() => handleSelect(opt)}
+                                        className={`w-full text-left p-4 md:p-6 rounded-2xl border-2 font-bold text-lg md:text-xl transition-all flex justify-between items-center ${btnStyle}`}
+                                    >
+                                        <span>{opt}</span>
+                                        {icon}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const StartScreen = ({ onStart }) => (
+            <div className="w-full h-full flex flex-col items-center justify-center animate-gradient bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 p-4 text-center">
+                <div className="flex flex-row flex-nowrap items-center justify-center gap-2 sm:gap-4 md:gap-6 mb-12 w-full max-w-full overflow-hidden px-2">
+                    <span className="text-3xl sm:text-6xl md:text-8xl lg:text-9xl animate-bounce shrink-0">🏁</span>
+                    <h1 className="text-[7vw] sm:text-4xl md:text-6xl lg:text-8xl font-black text-white drop-shadow-2xl font-bungee leading-none whitespace-nowrap px-1">
+                        VƯỢT CHƯỚNG NGẠI VẬT
+                    </h1>
+                    <span className="text-3xl sm:text-6xl md:text-8xl lg:text-9xl animate-bounce shrink-0">🏁</span>
+                </div>
+                <button 
+                    onClick={onStart} 
+                    className="px-12 py-6 md:px-20 md:py-10 bg-white rounded-3xl shadow-2xl hover:scale-110 transition-all border-b-8 border-gray-200 active:translate-y-2 active:border-b-0"
+                >
+                    <span className="text-3xl md:text-5xl font-black text-blue-600 font-bungee uppercase">BẮT ĐẦU</span>
+                </button>
+            </div>
+        );
+
+        const GameView = ({ onGameOver, playSound }) => {
+            const [distance, setDistance] = useState(0);
+            const [isQuestionActive, setIsQuestionActive] = useState(false);
+            const [currentIdx, setCurrentIdx] = useState(0);
+            const [score, setScore] = useState(0);
+            const [isJumping, setIsJumping] = useState(false);
+            const [jumpY, setJumpY] = useState(0);
+            const [jumpX, setJumpX] = useState(0);
+            
+            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+            const ballXBase = isMobile ? 60 : 150; 
+
+            const distanceRef = useRef(0);
+            const obstacles = useRef([]);
+            const groundDecor = useRef([]);
+            const clouds = useRef([]);
+
+            useEffect(() => {
+                let lastPos = 1200;
+                obstacles.current = Array.from({length: 10}, (_, i) => {
+                    const gap = 1200 + Math.random() * 800;
+                    lastPos += gap;
+                    return { id: i, emoji: OBSTACLE_TYPES[Math.floor(Math.random()*OBSTACLE_TYPES.length)], pos: lastPos };
+                });
+                groundDecor.current = Array.from({length: 120}, (_, i) => ({
+                    id: i, emoji: GROUND_DECOR[Math.floor(Math.random()*GROUND_DECOR.length)], x: i * 200 + Math.random()*100, y: Math.random()*30 + 5
+                }));
+                clouds.current = Array.from({length: 8}, (_, i) => ({
+                    id: i, x: Math.random()*100, y: 5 + Math.random()*25, s: 0.05 + Math.random()*0.1, scale: 0.8 + Math.random()*1.8
+                }));
+            }, []);
+
+            useEffect(() => {
+                let frame;
+                const loop = () => {
+                    if (!isQuestionActive && !isJumping) {
+                        distanceRef.current += 7;
+                        setDistance(distanceRef.current);
+                        const currentObstacle = obstacles.current[currentIdx];
+                        if (currentObstacle && distanceRef.current + ballXBase + 180 >= currentObstacle.pos) {
+                            setIsQuestionActive(true);
+                        }
+                    }
+                    frame = requestAnimationFrame(loop);
+                };
+                frame = requestAnimationFrame(loop);
+                return () => cancelAnimationFrame(frame);
+            }, [isQuestionActive, isJumping, currentIdx, ballXBase]);
+
+            const handleAnswer = (correct) => {
+                if (correct) setScore(s => s + 1);
+                
+                setIsQuestionActive(false);
+                setIsJumping(true);
+                playSound('jump');
+
+                let start = performance.now();
+                const duration = 1200;
+                const jumpLoop = (time) => {
+                    let elapsed = time - start;
+                    let p = elapsed / duration;
+                    if (p > 1) p = 1;
+                    const h = 350; 
+                    setJumpY(-4 * h * Math.pow(p - 0.5, 2) + h);
+                    setJumpX(p * 850); 
+                    if (p < 1) requestAnimationFrame(jumpLoop);
+                    else {
+                        setIsJumping(false);
+                        setJumpY(0); setJumpX(0);
+                        distanceRef.current += 850;
+                        if (currentIdx === 9) onGameOver(correct ? score + 1 : score);
+                        else setCurrentIdx(i => i + 1);
+                    }
+                };
+                requestAnimationFrame(jumpLoop);
+            };
+
+            return (
+                <div className="w-full h-full bg-blue-400 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-b from-blue-500 to-blue-300" />
+                    <div className="absolute top-6 right-6 text-[80px] md:text-[130px] opacity-40 animate-pulse">☀️</div>
+                    
+                    {clouds.current.map(c => (
+                        <div key={c.id} className="absolute text-7xl md:text-9xl opacity-60" 
+                             style={{ top: c.y+'%', left: (c.x + distance * 0.01 * c.s) % 130 - 15 + '%', transform: `scale(${c.scale})` }}>☁️</div>
+                    ))}
+                    
+                    <div className="absolute bottom-0 w-full h-[20%] bg-green-600 border-t-8 border-green-700">
+                        {groundDecor.current.map(d => (
+                            <div key={d.id} className="absolute text-2xl md:text-3xl" style={{ bottom: d.y+'px', left: (d.x - distance) % 8000 + 'px' }}>{d.emoji}</div>
+                        ))}
+                    </div>
+
+                    {obstacles.current.map(obs => {
+                        const x = obs.pos - distance;
+                        if (x < -600 || x > 2500) return null;
+                        return (
+                            <div key={obs.id} className="absolute bottom-[20%] text-[120px] md:text-[220px] transform drop-shadow-2xl z-10" 
+                                 style={{ left: x + 'px', transform: `translateY(${obs.emoji === '📦' ? '45%' : '25%'})` }}>{obs.emoji}</div>
+                        );
+                    })}
+
+                    <div className="absolute bottom-[20%] z-20" 
+                         style={{ left: (ballXBase + jumpX) + 'px', transform: `translate(-50%, ${-jumpY + 5}px) rotate(${distance*2.5}deg)` }}>
+                        <div className="w-16 h-16 md:w-24 md:h-24 bg-red-600 rounded-full border-4 border-red-800 shadow-2xl ball-shadow relative overflow-hidden">
+                            <div className="absolute top-2 left-4 md:left-5 w-6 h-3 md:w-8 md:h-4 bg-white/40 rounded-full" />
+                        </div>
+                    </div>
+
+                    <div className="absolute top-20 left-4 md:top-24 md:left-6 px-6 py-2 md:px-10 md:py-4 bg-white/20 backdrop-blur-md rounded-full text-white font-black text-xl md:text-4xl border-2 border-white/40 shadow-lg z-30">
+                        🏆 ĐIỂM: {score}/10
+                    </div>
+
+                    {isQuestionActive && (
+                        <QuestionModal 
+                            question={QUESTIONS[currentIdx]} 
+                            onAnswer={handleAnswer} 
+                            playSound={playSound}
+                        />
+                    )}
+                </div>
+            );
+        };
+
+        const EndScreen = ({ score, onPlayAgain }) => (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 text-white p-6 relative overflow-hidden text-center">
+                <div className="z-10 w-full max-w-lg">
+                    <h1 className="text-4xl md:text-7xl font-black font-bungee mb-6 drop-shadow-lg text-yellow-300">XUẤT SẮC!</h1>
+                    <div className="bg-white/20 backdrop-blur-xl p-8 md:p-16 rounded-[40px] border-4 border-white/30 shadow-2xl mb-8">
+                        <div className="text-8xl md:text-[150px] font-black font-bungee text-white drop-shadow-2xl">{score}/10</div>
+                        <p className="text-xl font-black uppercase tracking-[0.2em] mt-4 opacity-90">Câu Trả Lời Đúng</p>
+                    </div>
+                    <button onClick={onPlayAgain} className="px-12 py-6 bg-white text-blue-600 rounded-[30px] font-black text-2xl md:text-3xl font-bungee shadow-2xl hover:bg-yellow-400 hover:text-blue-900 active:scale-95 transition-all">
+                        CHƠI LẠI
+                    </button>
+                </div>
+                {[...Array(30)].map((_, i) => (
+                    <div key={i} className="absolute animate-ping rounded-full bg-yellow-300 opacity-50" 
+                         style={{ width: Math.random()*20, height: Math.random()*20, top: Math.random()*100+'%', left: Math.random()*100+'%', animationDuration: (0.5+Math.random())+'s' }} />
+                ))}
+            </div>
+        );
+
+        const App = () => {
+            const [state, setState] = useState('START');
+            const [score, setScore] = useState(0);
+            const [isMuted, setIsMuted] = useState(false);
+            const audioCache = useRef({});
+            const bgmRef = useRef(null);
+
+            const unlockAudio = () => {
+                if (isMuted) return;
+                if (!bgmRef.current) {
+                    const bgm = new Audio('bgm.mp3');
+                    bgm.loop = true;
+                    bgm.volume = 0.6;
+                    bgmRef.current = bgm;
+                }
+                const sfxNames = ['click', 'correct', 'wrong', 'jump'];
+                sfxNames.forEach(name => {
+                    const a = new Audio(`${name}.mp3`);
+                    a.volume = 0;
+                    a.play().then(() => {
+                        a.pause();
+                        a.currentTime = 0;
+                        a.volume = 0.5;
+                        audioCache.current[name] = a;
+                    }).catch(() => {});
+                });
+                if (bgmRef.current) bgmRef.current.play().catch(() => {});
+            };
+
+            const playSound = useCallback((type) => {
+                if (isMuted) return;
+                const audio = audioCache.current[type];
+                if (audio) {
+                    audio.currentTime = 0;
+                    audio.play().catch(() => {});
+                }
+            }, [isMuted]);
+
+            return (
+                <div className="w-full h-screen relative bg-sky-950 overflow-hidden">
+                    <button onClick={() => setIsMuted(!isMuted)} className="absolute top-4 right-4 z-[100] p-3 bg-white/20 backdrop-blur-lg border-2 border-white/30 rounded-2xl text-xl shadow-xl active:scale-90 transition-all">
+                        {isMuted ? '🔇' : '🔊'}
+                    </button>
+
+                    {state === 'START' && <StartScreen onStart={() => { unlockAudio(); playSound('click'); setState('PLAY'); }} />}
+                    {state === 'PLAY' && <GameView onGameOver={(s) => { setScore(s); setState('END'); }} playSound={playSound} />}
+                    {state === 'END' && <EndScreen score={score} onPlayAgain={() => { playSound('click'); setState('START'); }} />}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
