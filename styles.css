@@ -15,6 +15,15 @@
     --transition: all 0.3s ease;
 }
 
+.story-video iframe {
+  width: 100%;
+  max-width: 800px;
+  height: 450px;
+  border-radius: 12px;
+  display: block;
+  margin: 20px auto;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
